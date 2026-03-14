@@ -165,13 +165,13 @@ The notebook will:
 
 ## Deliverables
 
-### A. Technical Analysis (Required)
+### A. Technical Analysis 
 
 1. **Code:** All scripts in `final/draft/` are runnable
 2. **Outputs:** Sample grids saved in `./untrack/outputs/final/`
 3. **Analysis:** `analysis.ipynb` contains visualization and interpretation, with the main result being that `x0` strongly outperforms `eps` in this 1-epoch setting
 
-### B. Repository Hygiene (Required)
+### B. Repository Hygiene
 
 1. **README:** This file (setup, run commands, hardware notes)
 2. **No large data:** MNIST is downloaded on-the-fly (not committed)
@@ -188,47 +188,7 @@ The notebook will:
 4. Failure modes + limitations
 5. Conclusions
 
----
-
-## Troubleshooting
-
-### Issue: "No module named 'lab07_diffusion_core'"
-
-**Solution:** Run scripts from the **repo root**, not from `final/draft/`:
-```bash
-cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/BenBentley_DATA37100_Final"
-bash final/draft/run_baselines.sh
-```
-
-### Issue: "CUDA out of memory"
-
-**Solution:** Reduce batch size in the scripts:
-```bash
-# Edit run_baselines.sh or run_experiment.sh
-# Change --batch-size 128 to --batch-size 64 or --batch-size 32
-```
-
-### Issue: "results.csv not found"
-
-**Solution:** Run the experiment first:
-```bash
-bash final/draft/run_experiment.sh
-```
-
-### Issue: Slow training on CPU
-
-**Expected behavior:** Training on CPU will be 5-10× slower than GPU. The full experiment may take 30-60 minutes.
-
-**Solution:** If you have a CUDA GPU, install PyTorch with CUDA:
-```bash
-# Check CUDA version first
-nvidia-smi
-
-# Install PyTorch with CUDA (example for CUDA 11.8)
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
-```
-
----
+-- 
 
 ## Reproducibility
 

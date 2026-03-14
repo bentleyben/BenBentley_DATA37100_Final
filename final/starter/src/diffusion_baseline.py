@@ -161,7 +161,7 @@ def format_run_name(args: argparse.Namespace, overrides: Dict[str, str]) -> str:
 def add_week7_src_to_path() -> None:
     # This file: <repo_root>/final/starter/src/diffusion_baseline.py
     repo_root = Path(__file__).resolve().parents[3]
-    week7_src = repo_root / "week7" / "src"
+    week7_src = repo_root / "final" / "starter" / "src" / "lab07_diffusion_core.py"
     if not week7_src.exists():
         raise FileNotFoundError(
             f"Could not find week7/src at: {week7_src}\n"
