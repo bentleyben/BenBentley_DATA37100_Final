@@ -1,6 +1,6 @@
 # DATA 37100 Final Project — Draft
 
-**Student:** Ben Bentley
+**Student:** Ben Bentley  
 **Research Question:** In a small-budget MNIST diffusion setup, how do timestep count (T) and prediction target (eps vs x0) affect sample quality and failure modes?
 
 ---
