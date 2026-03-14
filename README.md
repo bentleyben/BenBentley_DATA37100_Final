@@ -9,7 +9,6 @@
 
 ```bash
 # Navigate to repo root
-cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/BenBentley_DATA37100_Final"
 
 # Run baselines (Diffusion + DCGAN)
 bash final/draft/run_baselines.sh
