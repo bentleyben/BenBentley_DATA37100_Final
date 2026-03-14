@@ -1,7 +1,7 @@
 # DATA 37100 Final Project — Draft
 
 **Student:** Ben Bentley
-**Research Question:** How do diffusion timesteps (T) and prediction target (eps vs x0) affect sample sharpness and failure modes on MNIST?
+**Research Question:** In a small-budget MNIST diffusion setup, how do timestep count (T) and prediction target (eps vs x0) affect sample quality and failure modes?
 
 ---
 
@@ -21,7 +21,7 @@ bash final/draft/run_experiment.sh
 jupyter notebook final/draft/analysis.ipynb
 ```
 
-**Expected total runtime:** ~15-30 minutes (depending on hardware)
+**Expected total runtime:** ~7-15 minutes on Apple Silicon `mps`, longer on CPU
 
 ---
 
@@ -47,12 +47,12 @@ final/tools/
 untrack/outputs/final/     # Output directory (not committed)
 ├── diffusion/             # Diffusion runs
 │   ├── results.csv        # Experiment manifest
-│   └── run_YYYYMMDD_HHMMSS_*/  # Individual runs
+│   └── ds-mnist_*/             # Individual runs
 │       ├── run_args.json
 │       ├── summary.json
-│       └── *.png          # Sample grids
+│       └── samples/*.png       # Sample grids
 └── gan/                   # GAN runs
-    └── run_YYYYMMDD_HHMMSS_*/
+    └── ds-mnist_*/
 ```
 
 ---
@@ -96,12 +96,12 @@ bash final/draft/run_baselines.sh
 ```
 
 **Outputs:**
-- Diffusion baseline: `./untrack/outputs/final/diffusion/run_*/`
-- DCGAN baseline: `./untrack/outputs/final/gan/run_*/`
+- Diffusion baseline: `./untrack/outputs/final/diffusion/ds-mnist_*/`
+- DCGAN baseline: `./untrack/outputs/final/gan/ds-mnist_*/`
 
 **What's trained:**
-1. **Diffusion:** MNIST, T=200, eps target, 1 epoch (~5-10 min)
-2. **DCGAN:** MNIST, 400 steps (~3-5 min)
+1. **Diffusion:** MNIST, T=200, eps target, 1 epoch (~52 sec on tested hardware)
+2. **DCGAN:** MNIST, 400 steps (~40 sec on tested hardware)
 
 ### Run Controlled Experiment (Required)
 
@@ -115,12 +115,12 @@ bash final/draft/run_experiment.sh
 - **Knob 1:** T ∈ {100, 200, 400}
 - **Knob 2:** target ∈ {eps, x0}
 - **Total runs:** 6
-- **Runtime:** ~10-20 minutes total
+- **Runtime:** ~5.3 minutes total on tested `mps` hardware
 
 **Outputs:**
-- Run directories: `./untrack/outputs/final/diffusion/run_*/`
+- Run directories: `./untrack/outputs/final/diffusion/ds-mnist_*/`
 - Results manifest: `./untrack/outputs/final/diffusion/results.csv`
-- Contact sheet: `./untrack/outputs/final/diffusion/contact_sheet.png`
+- Contact sheet: `./untrack/outputs/final/diffusion/grid_contact_sheet.png`
 
 ### Analyze Results
 
@@ -135,7 +135,7 @@ The notebook will:
 2. Display sample grids side-by-side
 3. Compare baseline performance (Diffusion vs DCGAN)
 4. Analyze T × target interaction effects
-5. Identify failure modes
+5. Focus the write-up on the diffusion result, with DCGAN used as the second required baseline
 
 ---
 
@@ -148,15 +148,19 @@ The notebook will:
 - Runtime: ~30-45 minutes
 
 **Recommended:**
-- GPU: CUDA-capable GPU (e.g., NVIDIA GTX 1060+)
+- GPU: Apple Silicon `mps` or CUDA-capable GPU
 - RAM: 16GB
 - Disk: 1GB
 - Runtime: ~10-15 minutes
+- Tested run times:
+  - Diffusion runs: 47.4s to 59.6s each
+  - GAN baseline: ~38.4s for 400 steps
 
 **Notes:**
 - The scripts use `--device auto` which selects GPU if available, otherwise CPU
 - Training is intentionally kept small (1 epoch, MNIST) to enable fast iteration
 - If you encounter OOM errors, reduce `--batch-size` in the scripts
+- On the tested machine, `--device auto` selected PyTorch `mps`
 
 ---
 
@@ -166,7 +170,7 @@ The notebook will:
 
 1. **Code:** All scripts in `final/draft/` are runnable
 2. **Outputs:** Sample grids saved in `./untrack/outputs/final/`
-3. **Analysis:** `analysis.ipynb` contains visualization and interpretation
+3. **Analysis:** `analysis.ipynb` contains visualization and interpretation, with the main result being that `x0` strongly outperforms `eps` in this 1-epoch setting
 
 ### B. Repository Hygiene (Required)
 
@@ -193,7 +197,7 @@ The notebook will:
 
 **Solution:** Run scripts from the **repo root**, not from `final/draft/`:
 ```bash
-cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/DATA37100-26Win"
+cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/BenBentley_DATA37100_Final"
 bash final/draft/run_baselines.sh
 ```
 

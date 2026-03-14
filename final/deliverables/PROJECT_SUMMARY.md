@@ -6,7 +6,7 @@
 ---
 
 ## Research Question
-**How do diffusion timesteps (T) and prediction target (eps vs x0) affect sample sharpness and failure modes on MNIST?**
+**In a small-budget MNIST diffusion setup, how do timestep count (T) and prediction target (eps vs x0) affect sample quality and failure modes?**
 
 ---
 
@@ -25,9 +25,9 @@
 - **Control variables:** dataset=MNIST, base_ch=64, seed=42, epochs=1
 
 ### Expected Failure Modes
-1. **Mode collapse** (DCGAN baseline)
-2. **Blurry samples at low T** (Diffusion T=100)
-3. **Potential artifacts from target choice**
+1. **Fragmented or noisy digits for weak diffusion settings** (`eps` after only 1 epoch)
+2. **Stroke thickness / blur trade-offs across T**
+3. **Potential GAN artifacts or limited diversity** in the baseline comparison
 
 ---
 
@@ -66,7 +66,7 @@
 
 ### Phase 1: Run Experiments (~20 min)
 ```bash
-cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/DATA37100-26Win"
+cd "/Users/benbentley/Documents/School/UChicago/Winter 2026/Intro to AI Deep Learning and Generative AI/BenBentley_DATA37100_Final"
 bash final/draft/run_baselines.sh      # ~10 min
 bash final/draft/run_experiment.sh     # ~10 min
 ```
@@ -120,7 +120,7 @@ Edit `report.md`:
 ### Technical Requirements ✅
 - **Two working baselines:** Diffusion + DCGAN
 - **One controlled experiment:** T × target grid (6 runs)
-- **Failure modes:** Pre-identified mode collapse (GAN), blur (low T diffusion)
+- **Failure modes:** Pre-identified diffusion artifacts plus one baseline comparison failure mode if supported by samples
 - **Runnable code:** All scripts executable from repo root
 - **Repository hygiene:** README, no large data, outputs in untrack/
 
